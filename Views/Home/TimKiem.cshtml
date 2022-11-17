@@ -1,0 +1,45 @@
+﻿@model System.Linq.IQueryable<QuanLyCuaHangLaptop.Models.SanPham>
+
+@{
+    ViewBag.Title = "title";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="col-sm-12 padding-right">
+      <div class="features_items">
+            <!--features_items-->
+            <h2 class="title text-center">Tìm kiếm</h2>
+            @{
+                foreach (var sanPham in Model)
+                {
+                    <div class="col-sm-4">
+                        <div class="product-image-wrapper">
+                            <div class="single-products">
+                                <div class="productinfo text-center">
+                                    <img src="@sanPham.HinhAnh" alt=""/>
+                                    <h2>@string.Format("{0:#,##0}", sanPham.GiaBan)</h2>
+                                    <p>@sanPham.TenSP</p>
+                                    <a href="#" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Thêm giỏ hàng</a>
+                                </div>
+                                <div class="product-overlay">
+                                    <div class="overlay-content">
+                                        <h2>@string.Format("{0:#,##0}", sanPham.GiaBan)</h2>
+                                        <p>@sanPham.TenSP@sanPham.TenSP</p>
+                                        <a href="@Url.Action("ThemGioHang", "Home", new {id = sanPham.Id})" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Thêm giỏ hàng</a>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="choose">
+                                <ul class="nav nav-pills nav-justified">
+                                    <li>
+                                        <a href="~/Home/Details/@sanPham.Id"><i class="fa fa-plus-square"></i>Chi tiết sản phẩm</a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                }
+            }
+    
+        </div><!--features_items-->
+</div>

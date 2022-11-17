@@ -1,0 +1,46 @@
+﻿@using WebGrease
+@model IEnumerable<QuanLyCuaHangLaptop.Models.CTHoaDon>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+
+
+<table class="table">
+    <tr>
+       
+        <th>
+            @Html.DisplayNameFor(model => model.SanPham1.TenSP)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Gia)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.SoLuong)
+        </th>
+        <th>Thành tiền</th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            
+            <td>
+                @Html.DisplayFor(modelItem => item.SanPham1.TenSP)
+            </td>
+            <td>
+                @string.Format("{0:#,##0}", item.Gia)
+              
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.SoLuong)
+            </td>
+            <td>
+                 @string.Format("{0:#,##0}", item.SoLuong * item.Gia)
+               
+            </td>
+        </tr>
+    }
+
+</table>

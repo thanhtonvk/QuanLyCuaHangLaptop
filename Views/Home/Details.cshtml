@@ -1,0 +1,219 @@
+﻿@using QuanLyCuaHangLaptop.Models
+@model QuanLyCuaHangLaptop.Models.SanPham
+
+@{
+    ViewBag.Title = "title";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    List<SanPham> sanPhamBanChay = ViewBag.SPBanChay;
+    DBContext db = new DBContext();
+    List<LoaiSP> loaiSps = db.LoaiSPs.Where(x => x.IsActive == true).ToList();
+    List<HangSX> hangSxes = db.HangSXes.Where(x => x.IsActive == true).ToList();
+}
+<div class="col-sm-3">
+    @*left-sidebar*@
+    <div class="left-sidebar">
+        <h2>Danh mục</h2>
+        <div class="panel-group category-products" id="accordian">
+            <!--category-productsr-->
+            @{
+                foreach (var loaiSp in loaiSps)
+                {
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <h4 class="panel-title">
+                                <a href="~/Home/SanPhamTheoDanhMuc/@loaiSp.Id">@loaiSp.TenLoai</a>
+                            </h4>
+                        </div>
+                    </div>
+                }
+            }
+
+        </div><!--/category-products-->
+
+        <div class="brands_products">
+            <!--brands_products-->
+            <h2>Brands</h2>
+            <div class="brands-name">
+                <ul class="nav nav-pills nav-stacked">
+                    @{
+                        foreach (var hangSx in hangSxes)
+                        {
+                            <li>
+                                <a href="~/Home/SanPhamTheoHang/@hangSx.Id"> @hangSx.TenHang</a>
+                            </li>
+                        }
+                    }
+
+
+                </ul>
+            </div>
+        </div><!--/brands_products-->
+
+    </div>
+</div>
+<div class="col-sm-9 padding-right">
+    <div class="product-details">
+        <!--product-details-->
+        <div class="col-sm-5">
+            <div class="view-product">
+                <img src="@Model.HinhAnh" alt=""/>
+                <h3>ZOOM</h3>
+            </div>
+            <div id="similar-product" class="carousel slide" data-ride="carousel">
+
+                <!-- Wrapper for slides -->
+                <div class="carousel-inner">
+                    <div class="item active">
+                        @{
+                            foreach (var hinhAnhSp in Model.HinhAnhSPs.ToList())
+                            {
+                                <a href="">
+                                    <img src="@hinhAnhSp.HinhAnh" alt="">
+                                </a>
+                            }
+                        }
+                    </div>
+                </div>
+
+                <!-- Controls -->
+                <a class="left item-control" href="#similar-product" data-slide="prev">
+                    <i class="fa fa-angle-left"></i>
+                </a>
+                <a class="right item-control" href="#similar-product" data-slide="next">
+                    <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+
+        </div>
+        <div class="col-sm-7">
+            <div class="product-information">
+                <!--/product-information-->
+
+                <h2>@Model.TenSP</h2>
+                <p>Web ID: @Model.Id</p>
+                <img src="~/Content/Home/images/product-details/rating.png" alt=""/>
+                <span>
+                    <span>@string.Format("{0:#,##0}", Model.GiaBan)</span>
+                    <label>Quantity:</label>
+                    <input type="text" value="1"/>
+                    <a type="button" class="btn btn-fefault cart" href="@Url.Action("ThemGioHang", "Home", new {id = Model.Id})">
+                        <i class="fa fa-shopping-cart"></i>
+                        Thêm giỏ hàng
+                    </a>
+                </span>
+                <p>
+                    <b>Danh mục:</b> @Model.LoaiSP1.TenLoai
+                </p>
+                <p><b>Tình trạng:</b> New</p>
+                <p>
+                    <b>Hãng sản xuất:</b> @Model.HangSX1.TenHang
+                </p>
+                <a href="">
+                    <img src="~/Content/Home/images/product-details/share.png" class="share img-responsive" alt=""/>
+                </a>
+            </div><!--/product-information-->
+        </div>
+    </div><!--/product-details-->
+    <div class="category-tab shop-details-tab">
+        <!--category-tab-->
+        <div class="col-sm-12">
+            <ul class="nav nav-tabs">
+                <li class="active">
+                    <a href="#reviews" data-toggle="tab">Thông số kỹ thuật</a>
+                </li>
+                <li>
+                    <a href="#companyprofile" data-toggle="tab">Mô tả</a>
+                </li>
+
+
+            </ul>
+        </div>
+        <div class="tab-content">
+
+
+            <div class="tab-pane fade" id="companyprofile">
+                <div class="col-sm-12">
+                    <p>@Model.ChiTiet</p>
+                </div>
+            </div>
+
+
+            <div class="tab-pane fade active in" id="reviews">
+                <div class="col-sm-12">
+                    <p>@Model.MoTa</p>
+
+
+                </div>
+            </div>
+
+        </div>
+    </div><!--/category-tab-->
+
+    <div class="recommended_items">
+        <!--recommended_items-->
+        <h2 class="title text-center">recommended items</h2>
+
+        <div id="recommended-item-carousel" class="carousel slide" data-ride="carousel">
+            <div class="carousel-inner">
+                <div class="item active">
+                    @{
+                        if (sanPhamBanChay.Count > 2)
+                        {
+                            for (int i = 0; i < 3; i++)
+                            {
+                                var sanPham = sanPhamBanChay[i];
+                                <div class="col-sm-4">
+                                    <div class="product-image-wrapper">
+                                        <div class="single-products">
+                                            <div class="productinfo text-center">
+                                                <img src="@sanPham.HinhAnh" alt=""/>
+                                                <h2>@string.Format("{0:#,##0}", sanPham.GiaBan)</h2>
+                                                <p>@sanPham.TenSP</p>
+                                                <a href="@Url.Action("ThemGioHang", "Home", new {id = sanPham.Id})" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Thêm giỏ hàng</a>
+
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                </div>
+                            }
+                        }
+                       
+                    }
+                </div>
+                <div class="item">
+                    @{
+                        if (sanPhamBanChay.Count > 5)
+                        {
+                            for (int i = 3; i < 6; i++)
+                            {
+                                var sanPham = sanPhamBanChay[i];
+                                <div class="col-sm-4">
+                                    <div class="product-image-wrapper">
+                                        <div class="single-products">
+                                            <div class="productinfo text-center">
+                                                <img src="@sanPham.HinhAnh" alt=""/>
+                                                <h2>@string.Format("{0:#,##0}", sanPham.GiaBan)</h2>
+                                                <p>@sanPham.TenSP</p>
+                                                <a href="@Url.Action("ThemGioHang", "Home", new {id = sanPham.Id})" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Thêm giỏ hàng</a>
+
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                </div>
+                            }
+                        }
+                       
+                    }
+                </div>
+            </div>
+            <a class="left recommended-item-control" href="#recommended-item-carousel" data-slide="prev">
+                <i class="fa fa-angle-left"></i>
+            </a>
+            <a class="right recommended-item-control" href="#recommended-item-carousel" data-slide="next">
+                <i class="fa fa-angle-right"></i>
+            </a>
+        </div>
+    </div><!--/recommended_items-->
+</div>

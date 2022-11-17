@@ -1,0 +1,54 @@
+﻿@{
+    ViewBag.Title = "title";
+}
+<section id="form">
+    <!--form-->
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-4 col-sm-offset-1">
+                <div class="login-form">
+                    <!--login form-->
+                    <h2>Đăng nhập</h2>
+                    <form action="" method="post">
+                        <input type="text" placeholder="Tên tài khoản" name="tenTK"/>
+                        <input type="password" placeholder="Nhập mật khẩu" name="matKhau"/>
+                        <span>
+                            <input type="checkbox" class="checkbox">
+                            Nhớ đăng nhập
+                        </span>
+                        @{
+                            if (ViewBag.ThongBao != null)
+                            {
+                                <p class="alert-danger alert">@ViewBag.ThongBao</p>
+                            }
+                        }
+                        <button type="submit" class="btn btn-default">Đăng nhập</button>
+                    </form>
+                </div><!--/login form-->
+            </div>
+            <div class="col-sm-1">
+                <h2 class="or">Hoặc</h2>
+            </div>
+            <div class="col-sm-4">
+                <div class="signup-form">
+                    <!--sign up form-->
+                    <h2>Đăng ký tài khoản</h2>
+                    <form action="~/Home/DangKy" method="post">
+                        <input type="text" placeholder="Tên tài khoản" name="tenTK"/>
+                        <input type="password" placeholder="Mật khẩu" name="matKhau"/>
+                        <input type="text" placeholder="Họ tên" name="hoTen"/>
+                        <input type="text" placeholder="Số điện thoại" name="sdt">
+                        <input type="text" placeholder="Địa chỉ" name="diachi">
+                        @{
+                            if (ViewBag.ThongBaoDangKy != null)
+                            {
+                                <p class="alert-danger alert">@ViewBag.ThongBaoDangKy</p>
+                            }
+                        }
+                        <button type="submit" class="btn btn-default">Signup</button>
+                    </form>
+                </div><!--/sign up form-->
+            </div>
+        </div>
+    </div>
+</section><!--/form-->
