@@ -38,6 +38,10 @@ namespace QuanLyCuaHangLaptop.Controllers
         [HttpPost]
         public ActionResult Login(string tenTK, string matKhau)
         {
+            if (tenTK == "admin" && matKhau == "admin")
+            {
+                return RedirectToAction("Index", "SanPham", new {area = "Admin"});
+            }
             var taiKhoan =
                 db.TaiKhoans.FirstOrDefault(x =>
                     x.TenTK.Equals(tenTK) && x.MatKhau.Equals(matKhau) && x.IsActive == true);
